@@ -1,5 +1,2 @@
-dj-database-url
-Django
-gunicorn
+django-heroku
 psycopg2
-whitenoise
