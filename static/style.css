@@ -15,3 +15,7 @@ input[type=submit] {
     margin:10px;
 }
 
+.marginauto {
+    margin: 10px auto 20px;
+    display: block;
+}

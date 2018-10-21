@@ -1,9 +1,12 @@
 
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <h1> Quotient Orbifolds </h1>
-	<p>Choose a genus and number of punctures (we require that g &#x2265; 0, p > 0 and 6g - 3p + 6 > 0) </p>
+    <p>Choose a genus and number of punctures (we require that g &#x2265; 0, n > 0 and 6g - 3n + 6 > 0) </p>
+    
+    <div> <img src="{% static 'surface.svg' %}" alt="Generating set" width=60% class="marginauto"> </div>
     
     <form action='' method='post'>
         {% csrf_token %}
