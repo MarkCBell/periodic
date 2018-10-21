@@ -3,7 +3,7 @@ from django import forms
 class MappingClassForm(forms.Form):
     genus = forms.IntegerField()
     punctures = forms.IntegerField()
-    word = forms.CharField(max_length=1000)
+    word = forms.CharField(max_length=1000, required=False)
     
     def clean(self):
         cleaned_data = super(MappingClassForm, self).clean()

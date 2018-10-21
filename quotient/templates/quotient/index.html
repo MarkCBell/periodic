@@ -21,31 +21,34 @@
     </form>
     
     {% if order != None %}
+        <h2>Mapping Class</h2>
         {% if order > 0 %}
-            <p>Order: {{ order }} </p>
-            <h2> Signature </h2>
-            <p>Euler Characteristic: {{ signature.euler_characteristic }} </p>
-            <p> Cone points: </p>
+            <p>Periodic mapping class of order {{ order }}</p>
+            <h2>Signature </h2>
+            <ul>
+            <li>Euler Characteristic: {{ signature.euler_characteristic }} </li>
+            <li>Cone points:
             <ul>
             {% for conepoint in signature.cone_points %}
                 {% if not conepoint.punctured %}
-                <li> Cone point of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                <li> Cone point of order {{ conepoint.rotation.denominator }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
             </ul>
-            <p> Punctures: </p>
+            <li> Punctures:
             <ul>
             {% for conepoint in signature.cone_points %}
                 {% if conepoint.punctured %}
-                <li> Puncture of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                <li> Puncture of order {{ conepoint.rotation.denominator }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
+            </ul> </li>
             </ul>
         {% else %}
-            <p>Order: Infinite </p>
+            <p>Non-periodic mapping class (infinite order)</p>
         {% endif %}
         
-        Computed using <a href="https://curver.readthedocs.io">Curver {{ version }}</a>.
+        <p>Computed using <a href="https://curver.readthedocs.io">Curver {{ version }}</a>.</p?
     {% endif %}
 {% endblock %}
 
