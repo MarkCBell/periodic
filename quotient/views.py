@@ -20,5 +20,5 @@ def index(request):
         order = None
         signature = None
     
-    return render(request, 'quotient/index.html', {'form': form, 'order': order, 'signature': signature})
+    return render(request, 'quotient/index.html', {'form': form, 'order': order, 'signature': signature, 'version': curver.__version__})
 
