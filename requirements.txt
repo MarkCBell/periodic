@@ -1,3 +1,4 @@
+curver
 dj-database-url
 django
 django-heroku

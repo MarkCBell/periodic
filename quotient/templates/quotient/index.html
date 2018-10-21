@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1> Quotient Orbifolds </h1>
+	<p>Choose a genus and number of punctures (we require that g &#x2265; 0, p > 0 and 6g - 3p + 6 > 0) </p>
+    
+    <form action='' method='post'>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {{ field.label_tag }} <br/>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type='submit' value='Submit'>
+    </form>
+    
+    {% if order != None %}
+        {% if order > 0 %}
+            <p>Order: {{ order }} </p>
+            <h2> Quotient orbifold signature </h2>
+            <p>Euler Characteristic: {{ signature.euler_characteristic }} </p>
+            <p> Cone points: </p>
+            <ul>
+            {% for conepoint in signature.cone_points %}
+                {% if not conepoint.punctured %}
+                <li> Cone point of order {{ conepoint.order}} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+            <p> Punctures: </p>
+            <ul>
+            {% for conepoint in signature.cone_points %}
+                {% if conepoint.punctured %}
+                <li> Puncture of order {{ conepoint.order}} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Order: Infinite </p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
