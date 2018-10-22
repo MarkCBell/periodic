@@ -5,3 +5,4 @@ django-heroku
 gunicorn
 psycopg2
 whitenoise
+django-user-agents
