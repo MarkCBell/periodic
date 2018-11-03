@@ -8,6 +8,8 @@
     
     <div> <img src="{% static 'surface.svg' %}" alt="Generating set" width=60% class="marginauto"> </div>
     
+    <p> Try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> </p>
+    
     <form action='' method='post'>
         {% csrf_token %}
         {% for field in form %}
