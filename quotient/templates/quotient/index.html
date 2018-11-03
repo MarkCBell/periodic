@@ -4,11 +4,11 @@
 
 {% block content %}
     <h1> Quotient Orbifolds </h1>
-    <p>Choose a genus and number of punctures (we require that g &#x2265; 0, n > 0 and 6g - 3n + 6 > 0) </p>
-    
+    <p>
+    Choose a surface S<sub>g,p</sub> by specifying a genus and number of punctures (we require that g &#x2265; 0, n > 0 and 6g - 3n + 6 > 0).
+    Then pick a word corresponding to a periodic mapping class in the generating set:
     <div> <img src="{% static 'surface.svg' %}" alt="Generating set" width=60% class="marginauto"> </div>
-    
-    <p> Try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> </p>
+    For example, try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> or one of the other <a href="{% url 'examples' %}">examples</a>.</p>
     
     <form action='' method='post'>
         {% csrf_token %}

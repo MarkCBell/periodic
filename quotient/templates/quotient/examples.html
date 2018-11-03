@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1> Examples </h1>
+    <table role="presentation" border="0" cellpadding="4" style="float: center;"> <tbody>
+        <tr> <td> Genus </td> <td> Punctures </td> <td> Word </td> </tr>
+        {% for g, p, words in examples %}
+        <tr> <td> {{ g }} </td> <td> {{ p }} </td> <td> </td> </tr>
+            {% for word in words %}
+                <tr> <td> </td> <td> </td> <td> {{ word }} </td> </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody> </table>
+
+{% endblock %}
