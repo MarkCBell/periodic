@@ -19,3 +19,12 @@ input[type=submit] {
     margin: 10px auto 20px;
     display: block;
 }
+
+tr.separated td {
+    border-bottom: 1px solid black;
+}
+
+table {
+    /* make the border continuous (without gaps between columns) */
+    border-collapse: collapse;
+}
