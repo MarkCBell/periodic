@@ -22,6 +22,10 @@
         <input type='submit' value='Submit'>
     </form>
     
+    {% if error != None %}
+    <p>Error: {{ error }}</p>
+    {% endif %}
+    
     {% if order != None %}
         <h2>Mapping Class</h2>
         {% if order > 0 %}
