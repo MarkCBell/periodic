@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from quotient.forms import MappingClassForm
 
+from collections import namedtuple
+from fractions import Fraction
+
 import curver
+
+ConePoint = namedtuple('ConePoint', ['punctured', 'order', 'rotation', 'preimages'])
+Orbifold = namedtuple('Orbifold', ['euler_characteristic', 'preimages', 'cone_points'])
 
 def index(request):
     error = None
@@ -10,15 +16,21 @@ def index(request):
     if request.method == 'POST':
         form = MappingClassForm(request.POST)
         if form.is_valid():
-            try:
+            # try:
+            if True:
                 g = int(form.cleaned_data['genus'])
                 p = int(form.cleaned_data['punctures'])
                 word = form.cleaned_data['word']
                 h = curver.load(g, p)(word)
                 order = h.order()
-                signature = h.quotient_orbifold_signature()[0] if order > 0 else None
-            except Exception as e:
-                error = str(e)
+                if order == 0:
+                    signature = None
+                else:
+                    signature = h.subgroup().quotient_orbifold_signature()[0]
+                    signature = Orbifold(signature.euler_characteristic, 1, sorted([
+                        ConePoint(cp.punctured, cp.order, 0 if min(cp.holonomy) == 0 else Fraction(min(range(1, cp.order), key=lambda i: i * min(cp.holonomy) % order), cp.order), cp.preimages) for cp in signature.cone_points]))
+            # except Exception as e:
+                # error = str(e)
     else:
         form = MappingClassForm()
     

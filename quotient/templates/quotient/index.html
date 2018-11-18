@@ -37,7 +37,7 @@
             <ul>
             {% for conepoint in signature.cone_points %}
                 {% if not conepoint.punctured %}
-                <li> Cone point of order {{ conepoint.rotation.denominator }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                <li> Cone point of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
             </ul>
@@ -45,7 +45,7 @@
             <ul>
             {% for conepoint in signature.cone_points %}
                 {% if conepoint.punctured %}
-                <li> Puncture of order {{ conepoint.rotation.denominator }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                <li> Puncture of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
             </ul> </li>

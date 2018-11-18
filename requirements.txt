@@ -1,4 +1,4 @@
-curver
+git://github.com/MarkCBell/curver.git@dev#egg=curver
 dj-database-url
 django
 django-heroku
