@@ -16,8 +16,7 @@ def index(request):
     if request.method == 'POST':
         form = MappingClassForm(request.POST)
         if form.is_valid():
-            # try:
-            if True:
+            try:
                 g = int(form.cleaned_data['genus'])
                 p = int(form.cleaned_data['punctures'])
                 word = form.cleaned_data['word']
@@ -29,8 +28,8 @@ def index(request):
                     signature = h.subgroup().quotient_orbifold_signature()[0]
                     signature = Orbifold(signature.euler_characteristic, 1, sorted([
                         ConePoint(cp.punctured, cp.order, 0 if min(cp.holonomy) == 0 else Fraction(min(range(1, cp.order), key=lambda i: i * min(cp.holonomy) % order), cp.order), cp.preimages) for cp in signature.cone_points]))
-            # except Exception as e:
-                # error = str(e)
+            except Exception as e:
+                error = str(e)
     else:
         form = MappingClassForm()
     
