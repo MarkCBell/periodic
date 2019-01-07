@@ -28,3 +28,15 @@ table {
     /* make the border continuous (without gaps between columns) */
     border-collapse: collapse;
 }
+
+.meeting td {
+    text-align: left;
+}
+
+.meeting th {
+    text-align: right;
+}
+
+p.ex1 {
+  width: 95%;
+}
