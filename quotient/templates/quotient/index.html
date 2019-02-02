@@ -6,15 +6,16 @@
     <h1> Quotient Orbifolds </h1>
     
     <p class="ex1">
-    <a href="https://curver.readthedocs.io">Curver</a> solves the conjugacy problem for periodic mapping classes by computing their quotient orbifold (and covering map), a total conjgacy invariant.
+    <a href="https://curver.readthedocs.io">Curver</a> solves the conjugacy problem for periodic mapping classes by computing their quotient orbifold (and covering map), a total conjugacy invariant.
     You can perform this calculation here, where the covering map is described by the rotation numbers about the cone points.
     </p>
     
     <p class="ex1">
     To do this, choose a surface S<sub>g,n</sub> by specifying a genus and number of punctures (we require that g &#x2265; 0, n > 0 and 6g - 3n + 6 > 0).
-    Then pick a word corresponding to a periodic mapping class in the generating set:
+    Then pick some words (separated by <tt>;</tt>) corresponding to a periodic mapping class in the generating set:
     <div> <img src="{% static 'surface.svg' %}" alt="Generating set" width=60% class="marginauto"> </div>
     For example, try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> or one of the other <a href="{% url 'examples' %}">examples</a>.</p>
+    
     
     <form action='' method='post'>
         {% csrf_token %}
@@ -25,38 +26,52 @@
     </form>
     
     {% if error != None %}
-    <p class="ex1">Error: {{ error }}</p>
+        <p class="ex1">Error: {{ error }}</p>
     {% endif %}
     
-    {% if order != None %}
-        <h2>Mapping Class</h2>
-        {% if order > 0 %}
-            <p class="ex1">Periodic mapping class of order {{ order }}</p>
-            <h2>Signature </h2>
-            <ul>
-            <li>Euler Characteristic: {{ signature.euler_characteristic }} </li>
-            <li>Cone points:
-            <ul>
+    {% if classes %}
+        <h2>Conjugacy Classes</h2>
+        {% for signature, words in classes.items %}
+        <button class="collapsible">{% for word in words %}{% if word %}{{word}}{%else%} &empty; {%endif%}{% if not forloop.last %}, {% endif %}{% endfor %}</button>
+        <div class="content">
+        <p class="ex1">Periodic mapping class of order {{ signature.order }}</p>
+        <ul>
+        <li>Euler Characteristic: {{ signature.euler_characteristic }} </li>
+        <li>Cone points:
+        <ul>
             {% for conepoint in signature.cone_points %}
                 {% if not conepoint.punctured %}
-                <li> Cone point of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                    <li> Cone point of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
-            </ul>
-            <li> Punctures:
-            <ul>
+        </ul>
+        <li> Punctures:
+        <ul>
             {% for conepoint in signature.cone_points %}
                 {% if conepoint.punctured %}
-                <li> Puncture of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
+                    <li> Puncture of order {{ conepoint.order }} (with {{ conepoint.preimages }} preimage{% if conepoint.preimages > 1 %}s{% endif %} where the first return map rotates by {{ conepoint.rotation }}) </li>
                 {% endif %}
             {% endfor %}
-            </ul> </li>
-            </ul>
-        {% else %}
-            <p class="ex1">Non-periodic mapping class (infinite order)</p>
-        {% endif %}
-        
-        <p class="ex1">Computed using <a href="https://curver.readthedocs.io">Curver {{ version }}</a>.</p>
+        </ul> </li>
+        </ul>
+        </div>
+        {% endfor %}
     {% endif %}
+    
+    {% if non_periodic %}
+        <h2>Non-periodic Mapping Classes</h2>
+        <ul>
+            {% for word in non_periodic %}
+                <li> {{ word }} </li>
+            {% endfor %}
+        </ul>
+        <p class="ex1">Non-periodic mapping class (infinite order)</p>
+    {% endif %}
+    
+    <p class="ex1">Computed using <a href="https://curver.readthedocs.io">Curver {{ version }}</a>.</p>
+    
+    {% load staticfiles %}
+    <script src="{% static "collapse.js" %}"></script>
+
 {% endblock %}
 
