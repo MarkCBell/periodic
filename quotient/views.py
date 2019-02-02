@@ -36,7 +36,7 @@ def index(request):
                         signature = h.subgroup().quotient_orbifold_signature()[0]
                         signature = Orbifold(order, signature.euler_characteristic, tuple(sorted([cone(cp, order) for cp in signature.cone_points])))
                         classes[signature].append(word)
-            except NameError as e:
+            except Exception as e:
                 error = str(e)
     else:
         form = MappingClassForm()
