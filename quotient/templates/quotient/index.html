@@ -34,7 +34,7 @@
         {% for signature, words in classes.items %}
         <button class="collapsible">{% for word in words %}{% if word %}{{word}}{%else%} &empty; {%endif%}{% if not forloop.last %}, {% endif %}{% endfor %}</button>
         <div class="content">
-        <p class="ex1">Periodic mapping class of order {{ signature.order }}</p>
+        <p class="ex1">Periodic mapping class of order {{ signature.order }} with quotient:
         <ul>
         <li>Euler Characteristic: {{ signature.euler_characteristic }} </li>
         <li>Cone points:
@@ -53,7 +53,7 @@
                 {% endif %}
             {% endfor %}
         </ul> </li>
-        </ul>
+        </ul> </p>
         </div>
         {% endfor %}
     {% endif %}
