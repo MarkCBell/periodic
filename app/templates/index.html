@@ -1,6 +1,19 @@
 
 {% extends 'base.html' %}
-{% load static %}
+
+{% macro render_field(field) %}
+<td>{{ field.label }}</td>
+<td>{{ field(**kwargs)|safe }}</td>
+{% if field.errors %}
+    <td>
+    <ul class=errors>
+    {% for error in field.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+    </td>
+{% endif %}
+{% endmacro %}
 
 {% block content %}
     <h1> Quotient Orbifolds </h1>
@@ -13,26 +26,28 @@
     <p class="ex1">
     To do this, choose a surface S<sub>g,n</sub> by specifying a genus and number of punctures (we require that g &#x2265; 0, n > 0 and 6g - 3n + 6 > 0).
     Then pick some words (separated by <tt>;</tt>) corresponding to a periodic mapping class in the generating set:
-    <div> <img src="{% static 'surface.svg' %}" alt="Generating set" width=60% class="marginauto"> </div>
-    For example, try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> or one of the other <a href="{% url 'examples' %}">examples</a>.</p>
-    
+    <div> <img src="{{ url_for('static', filename='surface.svg') }}" alt="Generating set" width=60% class="marginauto"> </div>
+    For example, try <tt>a_0.b_0.c_0.b_1</tt> on S<sub>2,1</sub> or one of the other <a href="{{ url_for('examples') }}">examples</a>.</p>
     
     <form action='' method='post'>
-        {% csrf_token %}
         <table class="meeting">
-        {{ form.as_table }}
+        {% for name in form %}
+            <tr>
+            {{ render_field(name) }}
+            </tr>
+        {% endfor %}
         </table>
         <input type='submit' value='Submit'>
     </form>
     
-    {% if error != None %}
+    {% if error %}
         <p class="ex1">Error: {{ error }}</p>
     {% endif %}
     
     {% if classes %}
         <h2>Conjugacy Classes</h2>
-        {% for signature, words in classes.items %}
-        <button class="collapsible">{% for word in words %}{% if word %}{{word}}{%else%} &empty; {%endif%}{% if not forloop.last %}, {% endif %}{% endfor %}</button>
+        {% for signature, words in classes.items() %}
+        <button class="collapsible">{% for word in words %}{% if word %}{{word}}{%else%} &empty; {%endif%}{% if not loop.last %}, {% endif %}{% endfor %}</button>
         <div class="content">
         <p class="ex1">Periodic mapping class of order {{ signature.order }} with quotient:
         <ul>
@@ -70,8 +85,7 @@
     
     <p class="ex1">Computed using <a href="https://curver.readthedocs.io">Curver {{ version }}</a>.</p>
     
-    {% load staticfiles %}
-    <script src="{% static "collapse.js" %}"></script>
+    <script src="{{ url_for('static', filename="collapse.js") }}"></script>
 
 {% endblock %}
 

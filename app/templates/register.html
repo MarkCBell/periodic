@@ -1,0 +1,21 @@
+{% macro render_field(field) %}
+  <th scope="row">{{ field.label }}
+  <td>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  {% endif %}
+{% endmacro %}
+
+<form method=post>
+<table class="table">
+  {% for name in form %}
+    <tr>
+    {{ render_field(name) }}
+    </tr>
+  {% endfor %}
+</table>
+<p><input type=submit value=Register>
+</form>

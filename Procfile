@@ -1,1 +1,1 @@
-web: gunicorn periodic.wsgi --log-file -
+web: gunicorn wsgi:app
