@@ -7,7 +7,7 @@ from wtforms import Form, StringField, validators, IntegerField, ValidationError
 
 import curver
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 ConePoint = namedtuple('ConePoint', ['punctured', 'order', 'rotation', 'preimages'])
 Orbifold = namedtuple('Orbifold', ['order', 'euler_characteristic', 'cone_points'])
@@ -29,7 +29,7 @@ class WordsForm(Form):
         if field.data < 1:
             raise ValidationError('Punctures must be a positive integer')
 
-@app.route('/', methods=['POST', 'GET'])
+@application.route('/', methods=['POST', 'GET'])
 def index():
     error = None
     order = None
@@ -56,12 +56,12 @@ def index():
 
     return render_template('index.html', form=form, classes=dict(classes), non_periodic=non_periodic, version=curver.__version__, error=error)
 
-@app.route('/examples')
+@application.route('/examples')
 def examples():
     examples = [
             (0, 5, ['s_0.s_1.s_2.s_3', 's_0.S_1.S_2.s_4']),
             (1, 1, ['a_0.b_0', 'a_0.b_0.a_0']),
             (2, 1, ['a_0.b_0.c_0.b_1']),
             ]
-    
+
     return render_template('examples.html', examples=examples)
