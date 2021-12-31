@@ -13,8 +13,8 @@ ConePoint = namedtuple('ConePoint', ['punctured', 'order', 'rotation', 'preimage
 Orbifold = namedtuple('Orbifold', ['order', 'euler_characteristic', 'cone_points'])
 
 def cone(cp, order):
-    # Rotation number is the multiplicative inverse of holonomy in ZZ/order.
-    return ConePoint(cp.punctured, cp.order, 0 if min(cp.holonomy) == 0 else Fraction(min(range(1, cp.order), key=lambda i: i * min(cp.holonomy) % order), cp.order), cp.preimages)
+    # Rotation number is the additive inverse of holonomy in ZZ/order.
+    return ConePoint(cp.punctured, cp.order, 0 if min(cp.holonomy) == 0 else Fraction(-min(cp.holonomy) % order, cp.order), cp.preimages)
 
 class WordsForm(Form):
     genus = IntegerField('Genus', [validators.InputRequired()], default=1)
@@ -54,7 +54,6 @@ def index():
         except Exception as e:
             error = str(e)
 
-    print(classes)
     return render_template('index.html', form=form, classes=dict(classes), non_periodic=non_periodic, version=curver.__version__, error=error)
 
 @app.route('/examples')
