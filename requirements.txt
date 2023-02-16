@@ -8,5 +8,5 @@ Jinja2==3.0.3
 MarkupSafe==2.0.1
 networkx==2.6.3
 numpy==1.21.5
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 WTForms==3.0.1
